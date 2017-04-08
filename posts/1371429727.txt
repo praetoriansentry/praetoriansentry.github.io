@@ -1,0 +1,5 @@
+Heuristics are simplified rules of thumb that make things simple and easy to implement. But their main advantage is that the user knows that they are not perfect, just expedient, and is therefore less fooled by their powers. They become dangerous when we forget that.
+
+From:
+
+Nassim Taleb - Antifragile
