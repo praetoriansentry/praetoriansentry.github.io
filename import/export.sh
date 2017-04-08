@@ -7,6 +7,6 @@ curl 'http://hilliardquotes.tumblr.com/api/read/json?start=60&debug=1' | jq '.' 
 
 cat *.json | jq --raw-output '.posts[] | [."unix-timestamp", ."quote-text", ."quote-source"] | @tsv' | sed 's/^"//' | sed 's/"$//' > data.tsv
 
-cat data.tsv | parallel --colsep "\t" "echo -n {2} > {1}.org"
-cat data.tsv | parallel --colsep "\t" "echo -e \"\n\nFrom:\n\" >> {1}.org"
-cat data.tsv | parallel --colsep "\t" "echo -n {3} >> {1}.org"
+cat data.tsv | parallel --colsep "\t" "echo -n {2} > {1}.txt"
+cat data.tsv | parallel --colsep "\t" "echo -e \"\n\nFrom:\n\" >> {1}.txt"
+cat data.tsv | parallel --colsep "\t" "echo -n {3} >> {1}.txt"
