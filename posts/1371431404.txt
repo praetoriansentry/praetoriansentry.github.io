@@ -1,5 +1,6 @@
-Evidence of absence is not absence of evidence, a simple point that has the following implications: for the antifragile, good news tends to be absent from past data, and for the fragile it is the bad news that doesn’t show easily.
+Evidence of absence is not absence of evidence, a simple point that
+has the following implications: for the antifragile, good news tends
+to be absent from past data, and for the fragile it is the bad news
+that doesn’t show easily.
 
-From:
-
-Nassim Taleb - Antifragile
+--Nassim Taleb - Antifragile
