@@ -2,7 +2,7 @@ baseurl = "/"
 languageCode = "en-us"
 theme = "terminal"
 paginate = 5
-publishDir = "./docs"
+publishDir = "./"
 
 [params]
 # dir name of your blog content (default is `content/posts`)
