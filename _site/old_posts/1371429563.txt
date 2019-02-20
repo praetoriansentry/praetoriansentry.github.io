@@ -1,0 +1,4 @@
+Antifragility is beyond resilience or robustness. The resilient
+resists shocks and stays the same; the antifragile gets better.
+
+--Nassim Taleb - Antifragile
