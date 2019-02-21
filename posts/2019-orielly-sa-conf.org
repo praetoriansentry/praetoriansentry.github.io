@@ -11,7 +11,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
 #+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
 #+HTML_HEAD: <meta property="og:description" content="Notes from my trip to the O'Reilly Software Architecture Conference" />
-#+HTML_HEAD: <meta property="og:image" content="../img/DypZgmuXcAAQRCt.jpg" />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
 #+OPTIONS: toc:nil
 
 I wanted to summarize and share all of the notes and takeaways that I
