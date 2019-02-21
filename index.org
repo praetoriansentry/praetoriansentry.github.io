@@ -16,4 +16,5 @@
 
 This is my home page... there are many like it, but this one is mine.
 
+- Notes from my trip to #OReillySAConf [[./posts/2019-orielly-sa-conf.org]]
 
