@@ -11,7 +11,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/mine.css" />
 #+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
 #+HTML_HEAD: <meta property="og:description" content="This is my website. There are many like it, but this one is mine" />
-#+HTML_HEAD: <meta property="og:image" content="img/ascii-john.jpg" />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/ascii-john.jpg" />
 #+OPTIONS: toc:nil
 
 This is my home page... there are many like it, but this one is mine.
