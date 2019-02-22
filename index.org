@@ -14,7 +14,8 @@
 #+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/ascii-john.jpg" />
 #+OPTIONS: toc:nil
 
-This is my home page... there are many like it, but this one is mine.
+I'm John. This is my website. Welcome to it.
 
+Writing:
 - Notes from my trip to #OReillySAConf [[./posts/2019-orielly-sa-conf.org]]
 

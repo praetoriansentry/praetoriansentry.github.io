@@ -1,0 +1,2 @@
+((org-mode . ((org-html-postamble . "<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: %C</small></footer>")
+              (org-html-preamble . "<small>John Hilliard: <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://www.flickr.com/photos/praetoriansentry/albums/72157626629989597'>Flickr</a></small>"))))))
