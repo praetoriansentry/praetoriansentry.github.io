@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>./john.dev</title>
+<title>Video to ASCII Art</title>
 <!-- 2019-02-23 Sat 07:03 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="John Hilliard">
 <meta  name="description" content="The website of John Hilliard"
 >
-<meta  name="keywords" content="blog, software, programming">
+<meta  name="keywords" content="architecture, conference">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center; }
@@ -89,11 +89,11 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/sakura-dark.css" />
-<link rel="stylesheet" type="text/css" href="css/mine.css" />
+<link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+<link rel="stylesheet" type="text/css" href="../css/mine.css" />
 <meta property="og:title" content="John Hilliard Blog" />
-<meta property="og:description" content="This is my website. There are many like it, but this one is mine" />
-<meta property="og:image" content="https://john.dev/img/ascii-john.jpg" />
+<meta property="og:description" content="Converting a video to animated ASCII Art" />
+<meta property="og:image" content="https://john.dev/img/face.gif" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -146,23 +146,82 @@ for the JavaScript code in this tag.
 <small>John Hilliard: <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://www.flickr.com/photos/praetoriansentry/albums/72157626629989597'>Flickr</a></small>
 </div>
 <div id="content">
-<h1 class="title">./john.dev</h1>
+<h1 class="title">Video to ASCII Art</h1>
 <p>
-I'm John. This is my website. Welcome to it.
+For whatever reason, I'm fascinated with <a href="https://en.wikipedia.org/wiki/ASCII_art">ASCII Art</a>. I guess it's
+because it reminds me of old school computing and hacking.
 </p>
 
 <p>
-Writing:
+I was curious today if I could create animated ASCII Art from a
+video. It turned out to be pretty easy.
 </p>
-<ul class="org-ul">
-<li>Creating ASCII Art from a video <a href="./posts/2019-02-23-ascii-face.html">./posts/2019-02-23-ascii-face.html</a>
-</li>
-<li>Notes from my trip to #OReillySAConf <a href="./posts/2019-orielly-sa-conf.html">./posts/2019-orielly-sa-conf.html</a>
-</li>
-</ul>
+
+<p>
+<b>Step 1</b>: I took a very short and simple video of myself on my
+phone. I took a video selfie and emailed that to myself.
+</p>
+
+<p>
+<b>Step 2</b>: I used Premmier, to conver the <code>.MOV</code> file from my phone
+into a series of <code>.jpg</code> files. Each frame of the video is being
+converted to a still frame.
+</p>
+
+<p>
+<b>Step 3</b>: Each frame of the video is converted from a <code>.jpg</code> file to
+an ASCII art <code>.txt</code> file. I used an awesome tool called <a href="https://csl.name/jp2a/">jp2a</a> to do the
+conversion. The actual command I used to do his is below.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">find . -type f | sort | xargs -I xxx jp2a --width=200 xxx --output=xxx.txt
+</pre>
+</div>
+
+<p>
+<b>Step 4</b>: I then used <code>cat</code> to concatentate all of the text files and
+ separae them with <code>pre</code> tags. At this point, I have a very simple
+ html documen with every frame of the animation inside of it.
+</p>
+
+<p>
+<b>Step 5</b>: The last step here was to animate the frames.
+</p>
+
+<div class="export">
+<p>
+&lt;script src="<a href="https://gist.github.com/praetoriansentry/297152a91354aded5cd0f81ea512a821.js">https://gist.github.com/praetoriansentry/297152a91354aded5cd0f81ea512a821.js</a>"&gt;&lt;/script&gt;
+</p>
+
+</div>
+
+<p>
+The basic approach was to hide all but one of the <code>pre</code> tags. Then
+there is a timer that's Running regularly to change with <code>pre</code> tag is
+showing.
+</p>
+
+<p>
+You can see the final html document <i>asci-face.hml</i>.
+</p>
+
+<p>
+<b>Step 6</b>: The last step here was to creae a real gif. Since I don't
+ know how to conver animaed plain text into a gif, I just too a screen
+ capture and rendered it as a gif. This is finale result:
+</p>
+
+
+<div class="figure">
+<p><img src="../img/face.gif" alt="face.gif">
+</p>
+<p><span class="figure-number">Figure 1:</span> The final gif</p>
+</div>
 </div>
 <div id="postamble" class="status">
-<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-02-23 Sat 07:01</small></footer>
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-02-23 Sat 06:59</small></footer>
 </div>
 </body>
 </html>
