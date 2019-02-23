@@ -23,21 +23,21 @@ video. It turned out to be pretty easy.
 *Step 1*: I took a very short and simple video of myself on my
 phone. I took a video selfie and emailed that to myself.
 
-*Step 2*: I used Premmier, to conver the ~.MOV~ file from my phone
+*Step 2*: I used Adobe Premier, to convert the ~.MOV~ file from my phone
 into a series of ~.jpg~ files. Each frame of the video is being
 converted to a still frame.
 
 *Step 3*: Each frame of the video is converted from a ~.jpg~ file to
 an ASCII art ~.txt~ file. I used an awesome tool called [[https://csl.name/jp2a/][jp2a]] to do the
-conversion. The actual command I used to do his is below.
+conversion. This is the actual command I used to do the conversion.
 
 #+BEGIN_SRC bash
 find . -type f | sort | xargs -I xxx jp2a --width=200 xxx --output=xxx.txt
 #+END_SRC
 
-*Step 4*: I then used ~cat~ to concatentate all of the text files and
- separae them with ~pre~ tags. At this point, I have a very simple
- html documen with every frame of the animation inside of it.
+*Step 4*: I then used ~cat~ to concatenate all of the text files and
+ separate them with ~pre~ tags. At this point, I have a very simple
+ html document with every frame of the animation inside of it.
 
 *Step 5*: The last step here was to animate the frames.
 
@@ -47,13 +47,13 @@ find . -type f | sort | xargs -I xxx jp2a --width=200 xxx --output=xxx.txt
 
 
 The basic approach was to hide all but one of the ~pre~ tags. Then
-there is a timer that's Running regularly to change with ~pre~ tag is
+there is a timer that's running regularly to change which ~pre~ tag is
 showing.
 
-You can see the final html document [[./hascii-face.html]].
+You can see the final html document [[./ascii-face.html]].
 
-*Step 6*: The last step here was to creae a real gif. Since I don't
- know how to conver animaed plain text into a gif, I just too a screen
+*Step 6*: The last step here was to create a real gif. Since I don't
+ know how to convert animated plain text into a gif, I just took a screen
  capture and rendered it as a gif. This is finale result:
 
 #+CAPTION: The final gif

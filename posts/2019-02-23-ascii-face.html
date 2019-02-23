@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Video to ASCII Art</title>
-<!-- 2019-02-23 Sat 07:13 -->
+<!-- 2019-02-23 Sat 15:46 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="John Hilliard">
@@ -163,7 +163,7 @@ phone. I took a video selfie and emailed that to myself.
 </p>
 
 <p>
-<b>Step 2</b>: I used Premmier, to conver the <code>.MOV</code> file from my phone
+<b>Step 2</b>: I used Adobe Premier, to convert the <code>.MOV</code> file from my phone
 into a series of <code>.jpg</code> files. Each frame of the video is being
 converted to a still frame.
 </p>
@@ -171,7 +171,7 @@ converted to a still frame.
 <p>
 <b>Step 3</b>: Each frame of the video is converted from a <code>.jpg</code> file to
 an ASCII art <code>.txt</code> file. I used an awesome tool called <a href="https://csl.name/jp2a/">jp2a</a> to do the
-conversion. The actual command I used to do his is below.
+conversion. This is the actual command I used to do the conversion.
 </p>
 
 <div class="org-src-container">
@@ -181,9 +181,9 @@ conversion. The actual command I used to do his is below.
 </div>
 
 <p>
-<b>Step 4</b>: I then used <code>cat</code> to concatentate all of the text files and
- separae them with <code>pre</code> tags. At this point, I have a very simple
- html documen with every frame of the animation inside of it.
+<b>Step 4</b>: I then used <code>cat</code> to concatenate all of the text files and
+ separate them with <code>pre</code> tags. At this point, I have a very simple
+ html document with every frame of the animation inside of it.
 </p>
 
 <p>
@@ -195,17 +195,17 @@ conversion. The actual command I used to do his is below.
 
 <p>
 The basic approach was to hide all but one of the <code>pre</code> tags. Then
-there is a timer that's Running regularly to change with <code>pre</code> tag is
+there is a timer that's running regularly to change which <code>pre</code> tag is
 showing.
 </p>
 
 <p>
-You can see the final html document <a href="./hascii-face.html">./hascii-face.html</a>.
+You can see the final html document <a href="./ascii-face.html">./ascii-face.html</a>.
 </p>
 
 <p>
-<b>Step 6</b>: The last step here was to creae a real gif. Since I don't
- know how to conver animaed plain text into a gif, I just too a screen
+<b>Step 6</b>: The last step here was to create a real gif. Since I don't
+ know how to convert animated plain text into a gif, I just took a screen
  capture and rendered it as a gif. This is finale result:
 </p>
 
@@ -217,7 +217,7 @@ You can see the final html document <a href="./hascii-face.html">./hascii-face.h
 </div>
 </div>
 <div id="postamble" class="status">
-<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-02-23 Sat 07:12</small></footer>
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-02-23 Sat 15:46</small></footer>
 </div>
 </body>
 </html>
