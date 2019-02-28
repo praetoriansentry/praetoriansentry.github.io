@@ -9,7 +9,7 @@
 #+SUBTITLE: ./john
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
-#+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
+#+HTML_HEAD: <meta property="og:title" content="Video to ASCII Art" />
 #+HTML_HEAD: <meta property="og:description" content="Converting a video to animated ASCII Art" />
 #+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/face.gif" />
 #+OPTIONS: toc:nil
