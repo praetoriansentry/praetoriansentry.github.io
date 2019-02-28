@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>./john.dev</title>
+<title>Bash Quine</title>
 <!-- 2019-02-28 Thu 14:47 -->
 <meta  charset="utf-8">
 <meta  name="generator" content="Org-mode">
 <meta  name="author" content="John Hilliard">
 <meta  name="description" content="The website of John Hilliard"
 >
-<meta  name="keywords" content="blog, software, programming">
+<meta  name="keywords" content="architecture, conference">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center; }
@@ -89,11 +89,11 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/sakura-dark.css" />
-<link rel="stylesheet" type="text/css" href="css/mine.css" />
+<link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+<link rel="stylesheet" type="text/css" href="../css/mine.css" />
 <meta property="og:title" content="John Hilliard Blog" />
-<meta property="og:description" content="This is my website. There are many like it, but this one is mine" />
-<meta property="og:image" content="https://john.dev/img/ascii-john.jpg" />
+<meta property="og:description" content="" />
+<meta property="og:image" content="https://john.dev/img/face.gif" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -146,22 +146,74 @@ for the JavaScript code in this tag.
 <small>John Hilliard: <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://www.flickr.com/photos/praetoriansentry/albums/72157626629989597'>Flickr</a></small>
 </div>
 <div id="content">
-<h1 class="title">./john.dev</h1>
+<h1 class="title">Bash Quine</h1>
 <p>
-I'm John. This is my website. Welcome to it.
+I wanted to see what it's like to write a <a href="https://en.wikipedia.org/wiki/Quine_(computing)">quine</a>. The challenge is
+pretty simple to understand: write a program that takes no input and
+can print itself.
 </p>
 
 <p>
-Writing:
+I had heard of quines before but had never looked at one. After
+looking at the Wiki page for a while I diced to try to write one on my
+bus ride. I figured that writing it in Go or Javascript would probably
+be a little too familiar, so I tried to write it in bash. This is what
+I ended up with
 </p>
-<ul class="org-ul">
-<li>Writing a Quine in Bash <a href="./posts/2019-02-29-quine.html">./posts/2019-02-29-quine.html</a>
-</li>
-<li>Creating ASCII Art from a video <a href="./posts/2019-02-23-ascii-face.html">./posts/2019-02-23-ascii-face.html</a>
-</li>
-<li>Notes from my trip to #OReillySAConf <a href="./posts/2019-orielly-sa-conf.html">./posts/2019-orielly-sa-conf.html</a>
-</li>
-</ul>
+
+<script src="https://gist.github.com/praetoriansentry/1ef5f4281183db797ef124ccc3a34feb.js"></script>
+
+<p>
+Since I don't know bash that well, I'm not even sure how much sense
+this makes. Looping using <code>seq</code> feels weird. Especially since all of
+the bounds of the lists are hard coded.
+</p>
+
+<p>
+The hardest part of the of the bash implementation is actually all of
+the escaping. Line 17 and 28 took a while to figure out. It would have
+been a lot easier if I used single quotes in <code>sed</code>. But then escaping
+a single quote on line 17 was very hard to figure out.
+</p>
+
+<p>
+Other than that, the structure of the application pretty much looks
+the same as the reference Java implementation from the Wiki page.
+</p>
+
+<p>
+The way I ended up thinking about this is that the program has code
+and strings. The code needs to print out strings that represent the
+code itself. In terms of printing, I had to print the code that's
+before the strings, then print the strings themselves as strings, then
+print the code that's after the strings.
+</p>
+
+<p>
+I don't know if I can explain quines better than explanations I've
+found online, but at least now I think I understand it.
+</p>
+
+<p>
+Just to make sure it actually works, hashing the code and hashing the
+output gives the same result.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-text">$ shasum quine.sh
+21415e04c597d28058aed0163f2e501a0bcd36ac  quine.sh
+$ ./quine.sh | shasum
+21415e04c597d28058aed0163f2e501a0bcd36ac  -
+$ ./quine.sh | bash | bash | bash | shasum
+21415e04c597d28058aed0163f2e501a0bcd36ac  -
+</pre>
+</div>
+
+<p>
+Another cool property of the quine is that we can keep passing the
+output to bash and it's going to have the same result.
+</p>
 </div>
 <div id="postamble" class="status">
 <footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-02-28 Thu 14:47</small></footer>

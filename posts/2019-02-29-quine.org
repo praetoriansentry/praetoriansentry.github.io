@@ -21,7 +21,7 @@ can print itself.
 I had heard of quines before but had never looked at one. After
 looking at the Wiki page for a while I diced to try to write one on my
 bus ride. I figured that writing it in Go or Javascript would probably
-be a little too familar, so I tried to write it in bash. This is what
+be a little too familiar, so I tried to write it in bash. This is what
 I ended up with
 
 #+BEGIN_HTML
