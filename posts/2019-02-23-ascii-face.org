@@ -41,10 +41,9 @@ find . -type f | sort | xargs -I xxx jp2a --width=200 xxx --output=xxx.txt
 
 *Step 5*: The last step here was to animate the frames.
 
-#+BEGIN_HTML
+#+BEGIN_EXPORT html
 <script src="https://gist.github.com/praetoriansentry/297152a91354aded5cd0f81ea512a821.js"></script>
-#+END_HTML
-
+#+END_EXPORT
 
 The basic approach was to hide all but one of the ~pre~ tags. Then
 there is a timer that's running regularly to change which ~pre~ tag is

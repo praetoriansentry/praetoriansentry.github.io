@@ -10,8 +10,8 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
 #+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
-#+HTML_HEAD: <meta property="og:description" content="" />
-#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/face.gif" />
+#+HTML_HEAD: <meta property="og:description" content="I wanted to see what it's like to write a quine. The challenge is pretty simple to understand: write a program that takes no input and can print itself." />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/quine.png" />
 #+OPTIONS: toc:nil
 
 I wanted to see what it's like to write a [[https://en.wikipedia.org/wiki/Quine_(computing)][quine]]. The challenge is
@@ -24,9 +24,9 @@ bus ride. I figured that writing it in Go or Javascript would probably
 be a little too familiar, so I tried to write it in bash. This is what
 I ended up with
 
-#+BEGIN_HTML
+#+BEGIN_EXPORT html
 <script src="https://gist.github.com/praetoriansentry/1ef5f4281183db797ef124ccc3a34feb.js"></script>
-#+END_HTML
+#+END_EXPORT
 
 Since I don't know bash that well, I'm not even sure how much sense
 this makes. Looping using ~seq~ feels weird. Especially since all of
