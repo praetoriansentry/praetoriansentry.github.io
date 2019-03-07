@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2019-03-04 Mon 10:58 -->
+<!-- 2019-03-07 Thu 06:43 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JavaScript Quine With Self Referential CRC32</title>
@@ -274,19 +274,19 @@ placeholder for a CRC32 hash and used a go program brute-force a
 CRC32 collision.
 </p>
 
+<script src="https://gist.github.com/praetoriansentry/03b6dc2e68e174ffd8168aef7d85f910.js"></script>
+
 <p>
-One interesting behavior of this program is that it didn't use 100% of
-the CPU. What I found was that doing various types of string
+One interesting behavior of the brute-force program is that it didn't
+use 100% of the CPU. I found that doing various types of string
 concatenation caused a big slowdown. I experimented with a few
-different ways of doing things like <code>fmt.Sprint</code>, <code>text.Template</code>, and
-<code>strings.Join</code>. They were all kind of slow. I think if I wanted to
+different ways of doing things like <code>fmt.Sprintf</code>, <code>text.Template</code>,
+and <code>strings.Join</code>. They were all kind of slow. I think if I wanted to
 speed things up, I would have needed to treat the string like an array
 and just overwrite part of the string with different hash
 values. Then, under the hood, there would be no need for concatenation
 or growing the string.
 </p>
-
-<script src="https://gist.github.com/praetoriansentry/03b6dc2e68e174ffd8168aef7d85f910.js"></script>
 
 <p>
 In practice, finding the CRC32 collision even by ignorant brute force
@@ -316,7 +316,7 @@ always verify they typed it correctly by verifying the CRC32.
 </div>
 </div>
 <div id="postamble" class="status">
-<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-03-04 Mon 10:57</small></footer>
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-03-07 Thu 06:43</small></footer>
 </div>
 </body>
 </html>

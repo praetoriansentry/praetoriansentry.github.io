@@ -17,6 +17,7 @@
 I'm John. This is my website. Welcome to it.
 
 Writing:
+- JavaScript Quine With Self Referential CRC32 [[./posts/2019-03-04-js-quine.org]]
 - Writing a Quine in Bash [[./posts/2019-02-29-quine.org]]
 - Creating ASCII Art from a video [[./posts/2019-02-23-ascii-face.org]]
 - Notes from my trip to #OReillySAConf [[./posts/2019-orielly-sa-conf.org]]

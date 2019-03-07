@@ -40,19 +40,19 @@ easy to understand. After getting the basic quine working, I added a
 placeholder for a CRC32 hash and used a go program brute-force a
 CRC32 collision.
 
-One interesting behavior of this program is that it didn't use 100% of
-the CPU. What I found was that doing various types of string
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/praetoriansentry/03b6dc2e68e174ffd8168aef7d85f910.js"></script>
+#+END_EXPORT
+
+One interesting behavior of the brute-force program is that it didn't
+use 100% of the CPU. I found that doing various types of string
 concatenation caused a big slowdown. I experimented with a few
-different ways of doing things like ~fmt.Sprint~, ~text.Template~, and
-~strings.Join~. They were all kind of slow. I think if I wanted to
+different ways of doing things like ~fmt.Sprintf~, ~text.Template~,
+and ~strings.Join~. They were all kind of slow. I think if I wanted to
 speed things up, I would have needed to treat the string like an array
 and just overwrite part of the string with different hash
 values. Then, under the hood, there would be no need for concatenation
 or growing the string.
-
-#+BEGIN_EXPORT html
-<script src="https://gist.github.com/praetoriansentry/03b6dc2e68e174ffd8168aef7d85f910.js"></script>
-#+END_EXPORT
 
 In practice, finding the CRC32 collision even by ignorant brute force
 was pretty fast, so I didn't bother trying to optimize the code.
