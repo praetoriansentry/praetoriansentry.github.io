@@ -11,7 +11,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
 #+HTML_HEAD: <meta property="og:type" content="article" />
 #+HTML_HEAD: <meta property="og:title" content="Emulating an HID Proxcard from Facility Code and Card Number" />
-#+HTML_HEAD: <meta property="article:author" content="John Hilliard" />
+#+HTML_HEAD: <meta property="article:author" content="https://www.facebook.com/Hilliard" />
 #+HTML_HEAD: <meta property="og:site_name" content="John Hilliard's Blog" />
 #+HTML_HEAD: <meta property="og:description" content="How to emulate the 26-bit HID FC and Card Number using a standard T5577 card." />
 #+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/t5577.png" />
