@@ -1,21 +1,23 @@
-#+TITLE: Notes Quotes and Thoughts from Release It
+#+TITLE: Notes, Quotes, and Thoughts from Release It
 #+DATE:
 #+AUTHOR: John Hilliard
 #+EMAIL: jhilliard@nextjump.com
 #+CREATOR: John Hilliard
 #+DESCRIPTION: The website of John Hilliard
 #+HTML_DOCTYPE: html5
-#+KEYWORDS: Proxmark, HID, Prox, T5577, Weigand
+#+KEYWORDS: Stability, Release It, Patterns, Software, Architecture
 #+SUBTITLE: ./john
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
 #+HTML_HEAD: <meta property="og:type" content="article" />
-#+HTML_HEAD: <meta property="og:title" content="Emulating an HID Proxcard from Facility Code and Card Number" />
+#+HTML_HEAD: <meta property="og:title" content="Notes, Quotes, and Thoughts from Release It" />
 #+HTML_HEAD: <meta property="article:author" content="https://www.facebook.com/Hilliard" />
 #+HTML_HEAD: <meta property="og:site_name" content="John Hilliard's Blog" />
-#+HTML_HEAD: <meta property="og:description" content="How to emulate the 26-bit HID FC and Card Number using a standard T5577 card." />
-#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/t5577.png" />
+#+HTML_HEAD: <meta property="og:description" content="My notes and highlights from reading Release It" />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/release-it.jpg" />
 #+OPTIONS: toc:nil, ^:nil
+
+[[file:../img/release-it.jpg]]
 
 Last month during the Next Jump engineering book club, we read [[https://www.worldcat.org/title/release-it-design-and-deploy-production-ready-software/oclc/1028052156][Release
 It]] by Michael Nygard. The book was jam packed with very useful

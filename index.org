@@ -17,6 +17,7 @@
 I'm John. This is my website. Welcome to it.
 
 Writing:
+- Notes and Highlights from Release It [[./posts/2019-04-14-release-it-notes.org]]
 - Emulating an HID Proxcard from Facility Code and Card Number [[./posts/2019-04-02-hid-prox.org]]
 - Creating a Simple Go Lambda Function to Save Data to S3 [[./posts/2019-03-31-lambda-to-s3-golang.org]]
 - JavaScript Quine With Self Referential CRC32 [[./posts/2019-03-04-js-quine.org]]
