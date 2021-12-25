@@ -1,0 +1,105 @@
+#+TITLE: Creating a Basic Gemini Server
+#+DATE:
+#+AUTHOR: John Hilliard
+#+EMAIL: jhilliard@nextjump.com
+#+CREATOR: John Hilliard
+#+DESCRIPTION: The website of John Hilliard
+#+HTML_DOCTYPE: html5
+#+KEYWORDS: gemini, networking, server
+#+SUBTITLE: ./john
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
+#+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
+#+HTML_HEAD: <meta property="og:description" content="" />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
+#+OPTIONS: toc:nil
+
+I learned about the Gemini protocol last week. I don't know why, but
+the idea seemed very appealing to me. I like the idea of a simpler
+network where you don't feel like you're being tracked and monitored
+all of the time.
+
+I did some looking around at the various servers that were
+available. Some of them seemed more full featured and
+configurable. Others were bare bones. Since my installation was going
+to run inside my own home network there were a few considerations:
+
+- I wanted to be able to verify the code myself
+- Generally, I want it to seem secure
+- I didn't want any CGI or scripting
+
+Those might seem like odd considerations, but I really just wanted an
+extremely simple server that can run Gemini.
+
+* Implementation Notes
+
+https://github.com/praetoriansentry/melchior
+
+Based on what I wanted, I figured it was just easier to make my own
+server. Part of what's so awesome about the Gemini protocol is how
+simple it is. I feel like the simplicity of the protocol will
+encourage innovation and development.
+
+In the case of a simple static Gemini server, there is very little
+that needs to be implemented. Basically comes down to:
+
+- Security
+- URL Parsing
+- Error Handing
+- Mime Types
+- Responses
+
+The nice part about using Go is a lot can be borrowed from the
+standard libraries.
+
+In my own deployment, there isn't a huge risk really. I guess if an
+attacker was able to totally own the box that's running Gemini, it
+could be a problem, but I have other controls to manage that. Even
+still, I'd like to minimize the risk of buffer over flows, directory
+traversal, remote code exec, remote/local file inclusion etc. By
+default Go helps with memory safety and had some decent control and
+libraries to help with some of the other risks. There are two main
+things that I used to help: ~net/http.Dir~ and ~path/filepath.Clean~.
+
+- https://golang.org/pkg/net/http/#Dir
+- https://golang.org/pkg/path/filepath/#Clean
+
+The ~Dir~ type within the ~http~ package is almost like a chroot. It's
+able to open files at a certain directory. I had never used this type
+before, but I did some poking around within the go library to see how
+they implement the static file server, and they used this
+approach. It's a little odd that it's part of the HTTP library to be
+honest, but as far as I can tell, this particular type can be used for
+many purposes.
+
+The other function I used was the ~Clean~ function in ~filepath~. I
+had never used this before either. I believe the combination of this
+method along with ~Dir~ should help with any risk of directory
+traversal. But, it's hard to say for sure. My own basic tests seem to
+look okay.
+
+Here is an example from the Go HTTP library where they use
+~path.Clean~:
+
+#+begin_src golang
+func (f *fileHandler) ServeHTTP(w ResponseWriter, r *Request) {
+	upath := r.URL.Path
+	if !strings.HasPrefix(upath, "/") {
+		upath = "/" + upath
+		r.URL.Path = upath
+	}
+	serveFile(w, r, f.root, path.Clean(upath), true)
+}
+#+end_src
+
+URL parsing for my server is handled entirely by Golang. I didn't
+really have to do anything special:  https://golang.org/pkg/net/url/
+
+In terms of detecting the content type and setting a response type
+header in Gemini, I ended up using another Go HTTP function: [[https://golang.org/pkg/net/http/#DetectContentType][DetectContentType]].
+
+This approach isn't perfect, but it will work well enough for me since
+I don't plan on doing anything fancy.
+
+I think with these few basic functions, we can hack together a pretty
+simple but secure (finger's crossed) server in very few lines of code.
