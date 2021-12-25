@@ -18,8 +18,6 @@ I'm John. This is my website. Welcome to it.
 
 Writing:
 
-
-
 - Postfix Postqueue Parser [[./posts/2020-11-28-postfix-postqueue.org]]
 - Sandboxing with systemd [[./posts/2020-11-14-systemd-rootdirectory.org]]
 - Testing with Gemini Diagnostics [[./posts/2020-11-02-gemini-dianostics.org]]
@@ -32,3 +30,20 @@ Writing:
 - Creating ASCII Art from a video [[./posts/2019-02-23-ascii-face.org]]
 - Notes from my trip to #OReillySAConf [[./posts/2019-orielly-sa-conf.org]]
 
+* Smart Contracts
+
+** BlockMazing
+- https://etherscan.io/address/0x222a11ac067da39b12bf221717bfab75e3d374b4
+- https://opensea.io/collection/mze
+- https://blockmazing.com/
+
+** ASCII Wall
+
+- https://etherscan.io/address/0x484e02fe62539871651263cb1a3952e4b95012f0
+- https://opensea.io/collection/asciiwall/
+- https://ascii.j4.is/
+
+** Photos
+
+- https://polygonscan.com/address/0x607612adc3c59f6f2096758d8181f700288f230c
+- https://opensea.io/collection/praetorianphoto
