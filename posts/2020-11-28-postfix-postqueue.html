@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-24 Fri 21:13 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postfix Postqueue Parser</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="John Hilliard">
+<meta name="description" content="The website of John Hilliard"
+>
+<meta name="keywords" content="postfix, golang, email">
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+<link rel="stylesheet" type="text/css" href="../css/mine.css" />
+<meta property="og:title" content="John Hilliard Blog" />
+<meta property="og:description" content="A small program to parse the postfix queue." />
+<meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<small>John Hilliard: <a href='https://john.dev'>Homepage</a>, <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://www.flickr.com/photos/praetoriansentry/albums/72157626629989597'>Flickr</a></small>
+</div>
+<div id="content">
+<h1 class="title">Postfix Postqueue Parser
+<br>
+<span class="subtitle">./john</span>
+</h1>
+<p>
+I'm starting to learn a bit more about Postfix. It's one of those
+things that I've treated as a black box for a long time. We've been
+running with basically the same configuration for a very long
+time. This week we noticed that the active queue backed up with tens
+of thousands of emails across a few different domains. After waiting
+for a few hours, we decided to try to purge the emails that were
+queued up.
+</p>
+
+<p>
+By default Postfix has a bunch of commands to give you insight into
+the queues and where emails are backing up. E.g. <a href="https://tecadmin.net/flush-postfix-mail-queue/">https://tecadmin.net/flush-postfix-mail-queue/</a> <a href="http://www.postfix.org/QSHAPE_README.html">http://www.postfix.org/QSHAPE_README.html</a>
+</p>
+
+<p>
+I really like the way the <a href="http://www.postfix.org/qshape.1.html">qshape</a> tool illustrates where the
+bottleneck in the queue is by pivoting domain and age. My goal was to
+make a simple script to easily purge emails from any queue based on
+the age of the email. The easiest starting point is to leverage the
+output from the <a href="http://www.postfix.org/postqueue.1.html">postqueue</a> tool.
+</p>
+
+<p>
+When you run <code>postqueue</code> you get output that looks a bit like this:
+</p>
+
+<p>
+The output is a little unusual because records are actually separated
+an empty line. The other thing that's a little unusual about this
+output is the format of the date. There is no year. My script won't
+work very well on January first. Right now it's just a maintenance
+script, but if I wanted to run this all the time in order to regularly
+purge old emails, I would need to handled that particular situation
+better.
+</p>
+
+<p>
+Here is the initial script:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-golang">package main
+
+import (
+        "bufio"
+        "flag"
+        "fmt"
+        "log"
+        "os"
+        "regexp"
+        "strconv"
+        "strings"
+        "time"
+)
+
+type (
+        QueuedItem struct {
+                QueueID     string
+                Status      string
+                Size        int
+                ArrivalTime time.Time
+                Sender      string
+                Recipient   string
+        }
+)
+
+const (
+        postfixFormat = "Mon Jan 02 15:04:05"
+)
+
+var (
+        minuteFlag int
+)
+
+func main() {
+        mf := flag.Int("m", 1000, "print a line if the message is older than m minutes")
+
+        flag.Parse()
+        if mf == nil {
+                log.Fatal("Nil minute flag")
+        }
+        minuteFlag = *mf
+
+        fromRe := regexp.MustCompile(`^([[:xdigit:]]*)([*!])\s*(\d*)\s*([A-Za-z]*\s[A-Za-z]*\s[0-9]{2}\s[0-9:]*)\s*(.*)$`)
+        rcptRe := regexp.MustCompile(`^\s*(.*)$`)
+
+        scanner := bufio.NewScanner(os.Stdin)
+        qi := new(QueuedItem)
+        for scanner.Scan() {
+                curLine := scanner.Text()
+                // this is some kind of comme
+                if strings.HasPrefix(curLine, "-") {
+                        continue
+                }
+                // This is a record separator
+                if curLine == "" {
+                        process(qi)
+                        qi = new(QueuedItem)
+                }
+                // this is a from line
+                fromMatches := fromRe.FindAllStringSubmatch(curLine, -1)
+                if fromMatches != nil {
+                        var sizeErr error = nil
+                        var timeErr error = nil
+                        qi.QueueID = fromMatches[0][1]
+                        qi.Status = fromMatches[0][2]
+                        qi.Size, sizeErr = strconv.Atoi(fromMatches[0][3])
+                        qi.ArrivalTime, timeErr = time.Parse(postfixFormat, fromMatches[0][4])
+                        qi.Sender = fromMatches[0][5]
+
+                        if sizeErr != nil {
+                                log.Printf("There was an issue reading the message size: %s", sizeErr.Error())
+                        }
+                        if timeErr != nil {
+                                log.Printf("There was an issue reading the message time: %s", timeErr.Error())
+                        }
+
+                        continue
+                }
+                // this is a to line
+                rcptMatches := rcptRe.FindAllStringSubmatch(curLine, -1)
+                if rcptMatches != nil {
+                        qi.Recipient = rcptMatches[0][1]
+                        continue
+                }
+                // idk what this is
+                log.Printf("Unrecognized line: %s", curLine)
+        }
+
+        if err := scanner.Err(); err != nil {
+                log.Println(err)
+        }
+}
+
+func process(q *QueuedItem) {
+        // This is is a little weird because postfix dates don't have a year associated with them...
+        roughNow := time.Now().Format(postfixFormat)
+        postfixNow, _ := time.Parse(postfixFormat, roughNow)
+
+        age := postfixNow.Sub(q.ArrivalTime)
+        if int(age.Minutes()) &lt; minuteFlag {
+                // still young
+                return
+        }
+        fmt.Println(q.QueueID)
+}
+</pre>
+</div>
+
+
+<p>
+I was considering writing it in perl, but changed my mind because I
+didn't want to figure out how to parse a date on our production
+system. I have no idea if any date handling modules or if cpan is
+available on that system. Go in this instance is helpful because it
+can be cross compiled and deployed very easily.
+</p>
+
+<p>
+In order to purge our queues of old emails I ran something like this:
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-bash">postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | postsuper -c /etc/postfix-02 -d -
+</pre>
+</div>
+
+<p>
+First, I'm getting all of the emails are in the queue for the 02
+instance of Postfix. Our system runs multiple instances of Postfix, so
+the tools need to know which instance I'm working with. I pass that
+output into the parser script. That will filter down so that it's only
+outputting the queue IDs of emails that have an arrival time more than
+1000 minutes ago. At that point, I can pass the queue IDs into
+<code>postsuper -d -</code> in order to purge the queue and delete any stale
+emails.
+</p>
+</div>
+<div id="postamble" class="status">
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2021-12-24 Fri 21:12</small></footer>
+</div>
+</body>
+</html>

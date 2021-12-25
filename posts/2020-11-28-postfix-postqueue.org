@@ -1,0 +1,217 @@
+#+TITLE: Postfix Postqueue Parser
+#+DATE:
+#+AUTHOR: John Hilliard
+#+EMAIL: jhilliard@nextjump.com
+#+CREATOR: John Hilliard
+#+DESCRIPTION: The website of John Hilliard
+#+HTML_DOCTYPE: html5
+#+KEYWORDS: postfix, golang, email
+#+SUBTITLE: ./john
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
+#+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
+#+HTML_HEAD: <meta property="og:description" content="A small program to parse the postfix queue." />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
+#+OPTIONS: toc:nil
+
+I'm starting to learn a bit more about Postfix. It's one of those
+things that I've treated as a black box for a long time. We've been
+running with basically the same configuration for a very long
+time. This week we noticed that the active queue backed up with tens
+of thousands of emails across a few different domains. After waiting
+for a few hours, we decided to try to purge the emails that were
+queued up.
+
+By default Postfix has a bunch of commands to give you insight into
+the queues and where emails are backing up. E.g. https://tecadmin.net/flush-postfix-mail-queue/ http://www.postfix.org/QSHAPE_README.html
+
+I really like the way the [[http://www.postfix.org/qshape.1.html][qshape]] tool illustrates where the
+bottleneck in the queue is by pivoting domain and age. My goal was to
+make a simple script to easily purge emails from any queue based on
+the age of the email. The easiest starting point is to leverage the
+output from the [[http://www.postfix.org/postqueue.1.html][postqueue]] tool.
+
+When you run ~postqueue~ you get output that looks a bit like this:
+
+#+begin_export ascii
+-Queue ID- --Size-- ----Arrival Time---- -Sender/Recipient-------
+70A5A232A2*   13617 Fri Nov 27 08:34:31  from@foo.com
+                                         rcpt@bar.com
+
+731342471C*   11971 Fri Nov 27 10:16:01  from@foo.com
+                                         rcpt@bar.com
+
+E3E8A205A9*   42342 Fri Nov 27 16:06:31  from@foo.com
+                                         rcpt@bar.com
+
+BC29A24ABB*   25130 Fri Nov 27 14:16:45  from@foo.com
+                                         rcpt@bar.com
+
+6072B22E3A*   13541 Fri Nov 27 08:48:14  from@foo.com
+                                         rcpt@bar.com
+
+F02C723873*   11961 Fri Nov 27 10:11:32  from@foo.com
+                                         rcpt@bar.com
+
+A758123AD9*   11895 Fri Nov 27 10:23:01  from@foo.com
+                                         rcpt@bar.com
+
+7A1D324B70*   25182 Fri Nov 27 14:22:44  from@foo.com
+                                         rcpt@bar.com
+
+7123D24F59*   13404 Fri Nov 27 10:19:16  from@foo.com
+                                         rcpt@bar.com
+
+0140221FE3*   13614 Fri Nov 27 08:32:33  from@foo.com
+                                         rcpt@bar.com
+
+930212366F*   13564 Fri Nov 27 11:09:59  from@foo.com
+                                         rcpt@bar.com
+
+EBFF5248C1*   25188 Fri Nov 27 14:22:52  from@foo.com
+                                         rcpt@bar.com
+#+end_export
+
+
+The output is a little unusual because records are actually separated
+an empty line. The other thing that's a little unusual about this
+output is the format of the date. There is no year. My script won't
+work very well on January first. Right now it's just a maintenance
+script, but if I wanted to run this all the time in order to regularly
+purge old emails, I would need to handled that particular situation
+better.
+
+Here is the initial script:
+
+#+begin_src golang
+package main
+
+import (
+	"bufio"
+	"flag"
+	"fmt"
+	"log"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+)
+
+type (
+	QueuedItem struct {
+		QueueID     string
+		Status      string
+		Size        int
+		ArrivalTime time.Time
+		Sender      string
+		Recipient   string
+	}
+)
+
+const (
+	postfixFormat = "Mon Jan 02 15:04:05"
+)
+
+var (
+	minuteFlag int
+)
+
+func main() {
+	mf := flag.Int("m", 1000, "print a line if the message is older than m minutes")
+
+	flag.Parse()
+	if mf == nil {
+		log.Fatal("Nil minute flag")
+	}
+	minuteFlag = *mf
+
+	fromRe := regexp.MustCompile(`^([[:xdigit:]]*)([*!])\s*(\d*)\s*([A-Za-z]*\s[A-Za-z]*\s[0-9]{2}\s[0-9:]*)\s*(.*)$`)
+	rcptRe := regexp.MustCompile(`^\s*(.*)$`)
+
+	scanner := bufio.NewScanner(os.Stdin)
+	qi := new(QueuedItem)
+	for scanner.Scan() {
+		curLine := scanner.Text()
+		// this is some kind of comme
+		if strings.HasPrefix(curLine, "-") {
+			continue
+		}
+		// This is a record separator
+		if curLine == "" {
+			process(qi)
+			qi = new(QueuedItem)
+		}
+		// this is a from line
+		fromMatches := fromRe.FindAllStringSubmatch(curLine, -1)
+		if fromMatches != nil {
+			var sizeErr error = nil
+			var timeErr error = nil
+			qi.QueueID = fromMatches[0][1]
+			qi.Status = fromMatches[0][2]
+			qi.Size, sizeErr = strconv.Atoi(fromMatches[0][3])
+			qi.ArrivalTime, timeErr = time.Parse(postfixFormat, fromMatches[0][4])
+			qi.Sender = fromMatches[0][5]
+
+			if sizeErr != nil {
+				log.Printf("There was an issue reading the message size: %s", sizeErr.Error())
+			}
+			if timeErr != nil {
+				log.Printf("There was an issue reading the message time: %s", timeErr.Error())
+			}
+
+			continue
+		}
+		// this is a to line
+		rcptMatches := rcptRe.FindAllStringSubmatch(curLine, -1)
+		if rcptMatches != nil {
+			qi.Recipient = rcptMatches[0][1]
+			continue
+		}
+		// idk what this is
+		log.Printf("Unrecognized line: %s", curLine)
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Println(err)
+	}
+}
+
+func process(q *QueuedItem) {
+	// This is is a little weird because postfix dates don't have a year associated with them...
+	roughNow := time.Now().Format(postfixFormat)
+	postfixNow, _ := time.Parse(postfixFormat, roughNow)
+
+	age := postfixNow.Sub(q.ArrivalTime)
+	if int(age.Minutes()) < minuteFlag {
+		// still young
+		return
+	}
+	fmt.Println(q.QueueID)
+}
+#+end_src
+
+
+I was considering writing it in perl, but changed my mind because I
+didn't want to figure out how to parse a date on our production
+system. I have no idea if any date handling modules or if cpan is
+available on that system. Go in this instance is helpful because it
+can be cross compiled and deployed very easily.
+
+In order to purge our queues of old emails I ran something like this:
+
+
+#+begin_src bash
+postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | postsuper -c /etc/postfix-02 -d -
+#+end_src
+
+First, I'm getting all of the emails are in the queue for the 02
+instance of Postfix. Our system runs multiple instances of Postfix, so
+the tools need to know which instance I'm working with. I pass that
+output into the parser script. That will filter down so that it's only
+outputting the queue IDs of emails that have an arrival time more than
+1000 minutes ago. At that point, I can pass the queue IDs into
+~postsuper -d -~ in order to purge the queue and delete any stale
+emails.
+
+
