@@ -17,6 +17,13 @@
 I'm John. This is my website. Welcome to it.
 
 Writing:
+
+
+
+- Postfix Postqueue Parser [[./posts/2020-11-28-postfix-postqueue.org]]
+- Sandboxing with systemd [[./posts/2020-11-14-systemd-rootdirectory.org]]
+- Testing with Gemini Diagnostics [[./posts/2020-11-02-gemini-dianostics.org]]
+- Creating a Basic Gemini Server [[./posts/2020-11-01-melchior.org]]
 - Notes and Highlights from Release It [[./posts/2019-04-14-release-it-notes.org]]
 - Emulating an HID Proxcard from Facility Code and Card Number [[./posts/2019-04-02-hid-prox.org]]
 - Creating a Simple Go Lambda Function to Save Data to S3 [[./posts/2019-03-31-lambda-to-s3-golang.org]]

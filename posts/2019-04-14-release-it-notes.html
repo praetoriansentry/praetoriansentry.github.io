@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2019-04-16 Tue 22:59 -->
+<!-- 2021-12-24 Fri 21:25 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notes, Quotes, and Thoughts from Release It</title>
@@ -162,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,7 +207,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -238,7 +251,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="preamble" class="status">
-<small>John Hilliard: <a href='https://john.dev'>Homepage</a>, <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://www.flickr.com/photos/praetoriansentry/albums/72157626629989597'>Flickr</a></small>
+<small>John Hilliard: <a href='https://john.dev'>Homepage</a>, <a href='https://twitter.com/praetorian'>Twitter</a>, <a href='https://keybase.io/praetoriansentry'>Keybase</a>, <a href='https://www.nextjump.com'>Company</a>, <a href='https://opensea.io/collection/praetorianphoto'>Photos</a></small>
 </div>
 <div id="content">
 <h1 class="title">Notes, Quotes, and Thoughts from Release It
@@ -270,12 +283,12 @@ end of each section within the book. Periodically, I've added some
 commentary, but most of the content comes directly from the book.
 </p>
 
-<div id="outline-container-org72f2e6c" class="outline-2">
-<h2 id="org72f2e6c"><span class="section-number-2">1</span> Stability Anti-patterns</h2>
+<div id="outline-container-org0a57199" class="outline-2">
+<h2 id="org0a57199"><span class="section-number-2">1</span> Stability Anti-patterns</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orga0e0a81" class="outline-3">
-<h3 id="orga0e0a81"><span class="section-number-3">1.1</span> Integration Points</h3>
+<div id="outline-container-org2ae789e" class="outline-3">
+<h3 id="org2ae789e"><span class="section-number-3">1.1</span> Integration Points</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Integration points are all of the dependencies of our systems. These
@@ -289,8 +302,8 @@ pipe, or remote procedure call can and will hang."
 </p>
 </div>
 
-<div id="outline-container-org4840991" class="outline-4">
-<h4 id="org4840991"><span class="section-number-4">1.1.1</span> Remember This</h4>
+<div id="outline-container-org6206497" class="outline-4">
+<h4 id="org6206497"><span class="section-number-4">1.1.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 <i>Beware this necessary evil.</i> Every integration point will eventually
@@ -328,8 +341,8 @@ Handshaking will all help you avoid the dangers of integration points.
 </div>
 </div>
 
-<div id="outline-container-org0352991" class="outline-3">
-<h3 id="org0352991"><span class="section-number-3">1.2</span> Chain Reactions</h3>
+<div id="outline-container-orga23a1f0" class="outline-3">
+<h3 id="orga23a1f0"><span class="section-number-3">1.2</span> Chain Reactions</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 A chain reaction is when a single failure makes other types of
@@ -339,8 +352,8 @@ increases and makes the odds of failure higher.
 </p>
 </div>
 
-<div id="outline-container-orgbb9baad" class="outline-4">
-<h4 id="orgbb9baad"><span class="section-number-4">1.2.1</span> Remember This</h4>
+<div id="outline-container-orgf45b202" class="outline-4">
+<h4 id="orgf45b202"><span class="section-number-4">1.2.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 <i>Recognize that one server down jeopardizes the rest.</i> A chain
@@ -383,8 +396,8 @@ Circuit Breaker on the calling side for that.
 </div>
 </div>
 
-<div id="outline-container-org73d4ca0" class="outline-3">
-<h3 id="org73d4ca0"><span class="section-number-3">1.3</span> Cascading Failures</h3>
+<div id="outline-container-org11e05ff" class="outline-3">
+<h3 id="org11e05ff"><span class="section-number-3">1.3</span> Cascading Failures</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 I think of chain reactions horizontally. If there is s system with
@@ -399,8 +412,8 @@ of the system.
 </p>
 </div>
 
-<div id="outline-container-orgde1e6b3" class="outline-4">
-<h4 id="orgde1e6b3"><span class="section-number-4">1.3.1</span> Remember This</h4>
+<div id="outline-container-org09b5fbc" class="outline-4">
+<h4 id="org09b5fbc"><span class="section-number-4">1.3.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 <i>Stop cracks from jumping the gap.</i> A cascading failure occurs when
@@ -431,8 +444,8 @@ to the troubled point.
 </div>
 </div>
 
-<div id="outline-container-org7a99068" class="outline-3">
-<h3 id="org7a99068"><span class="section-number-3">1.4</span> Users</h3>
+<div id="outline-container-org375a35a" class="outline-3">
+<h3 id="org375a35a"><span class="section-number-3">1.4</span> Users</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Users and usage can cause significant issues. Even something like good
@@ -441,8 +454,8 @@ or malicious traffic can cause a lot of issues.
 </p>
 </div>
 
-<div id="outline-container-org247b845" class="outline-4">
-<h4 id="org247b845"><span class="section-number-4">1.4.1</span> Remember This</h4>
+<div id="outline-container-org87fd3cb" class="outline-4">
+<h4 id="org87fd3cb"><span class="section-number-4">1.4.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-4-1">
 <p>
 <i>Users consume memory.</i> Each user's session requires some
@@ -478,8 +491,8 @@ conditions. Run special stress tests to hammer deep links or hot URLs.
 </div>
 </div>
 
-<div id="outline-container-orgac06b14" class="outline-3">
-<h3 id="orgac06b14"><span class="section-number-3">1.5</span> Blocked Threads</h3>
+<div id="outline-container-orga330554" class="outline-3">
+<h3 id="orga330554"><span class="section-number-3">1.5</span> Blocked Threads</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 Crashes aren't usually the cause of an issue. More common though are
@@ -489,8 +502,8 @@ to finish.
 </p>
 </div>
 
-<div id="outline-container-orga09ea5b" class="outline-4">
-<h4 id="orga09ea5b"><span class="section-number-4">1.5.1</span> Remember This</h4>
+<div id="outline-container-org68ae2db" class="outline-4">
+<h4 id="org68ae2db"><span class="section-number-4">1.5.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-5-1">
 <p>
 <i>Recall that the Blocked Threads antipattern is the proximate cause of
@@ -534,8 +547,8 @@ libraries to closed source for this very reason.
 </div>
 </div>
 
-<div id="outline-container-orgf30060f" class="outline-3">
-<h3 id="orgf30060f"><span class="section-number-3">1.6</span> Self-Denial Attacks</h3>
+<div id="outline-container-org1f4709f" class="outline-3">
+<h3 id="org1f4709f"><span class="section-number-3">1.6</span> Self-Denial Attacks</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 A self-denial attack is when the business or the system itself works
@@ -552,8 +565,8 @@ entirely.
 </p>
 </div>
 
-<div id="outline-container-org9884b00" class="outline-4">
-<h4 id="org9884b00"><span class="section-number-4">1.6.1</span> Remember This</h4>
+<div id="outline-container-org8dc6011" class="outline-4">
+<h4 id="org8dc6011"><span class="section-number-4">1.6.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-6-1">
 <p>
 <i>Keep the lines of communication open.</i> Self-denial attacks originate
@@ -585,8 +598,8 @@ hope that they, too, can get a PlayStation Twelve for $99.
 </div>
 </div>
 
-<div id="outline-container-org38f6e69" class="outline-3">
-<h3 id="org38f6e69"><span class="section-number-3">1.7</span> Scaling Effects</h3>
+<div id="outline-container-org17322c5" class="outline-3">
+<h3 id="org17322c5"><span class="section-number-3">1.7</span> Scaling Effects</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Scaling effects arise when components in a system scale at different
@@ -595,8 +608,8 @@ development environments to production.
 </p>
 </div>
 
-<div id="outline-container-org42590d8" class="outline-4">
-<h4 id="org42590d8"><span class="section-number-4">1.7.1</span> Remember This</h4>
+<div id="outline-container-org94597af" class="outline-4">
+<h4 id="org94597af"><span class="section-number-4">1.7.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-7-1">
 <p>
 <i>Examine production versus QA environments to spot Scaling Effects.</i>
@@ -620,8 +633,8 @@ communication.
 </div>
 </div>
 
-<div id="outline-container-org35c6e70" class="outline-3">
-<h3 id="org35c6e70"><span class="section-number-3">1.8</span> Unbalanced Capacities</h3>
+<div id="outline-container-orgc271afc" class="outline-3">
+<h3 id="orgc271afc"><span class="section-number-3">1.8</span> Unbalanced Capacities</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 The Unbalanced Capacity antipattern arises when there are different
@@ -631,8 +644,8 @@ handle 5,00.
 </p>
 </div>
 
-<div id="outline-container-org5374750" class="outline-4">
-<h4 id="org5374750"><span class="section-number-4">1.8.1</span> Remember This</h4>
+<div id="outline-container-orge40f531" class="outline-4">
+<h4 id="orge40f531"><span class="section-number-4">1.8.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-8-1">
 <p>
 <i>Examine server and thread counts.</i> In development and QA, your system
@@ -673,8 +686,8 @@ responding or get very slow.
 </div>
 </div>
 
-<div id="outline-container-orgce2c8e9" class="outline-3">
-<h3 id="orgce2c8e9"><span class="section-number-3">1.9</span> Dogpile</h3>
+<div id="outline-container-orgd085033" class="outline-3">
+<h3 id="orgd085033"><span class="section-number-3">1.9</span> Dogpile</h3>
 <div class="outline-text-3" id="text-1-9">
 <p>
 A dogpile can happen when the steady-state load of an application is
@@ -691,8 +704,8 @@ Examples:
 </ul>
 </div>
 
-<div id="outline-container-org3ab5fa7" class="outline-4">
-<h4 id="org3ab5fa7"><span class="section-number-4">1.9.1</span> Remember This</h4>
+<div id="outline-container-orgfcc7247" class="outline-4">
+<h4 id="orgfcc7247"><span class="section-number-4">1.9.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-9-1">
 <p>
 <i>Dogpiles force you to spend too much to handle peak demand.</i> A
@@ -717,8 +730,8 @@ points in their backoff periods/
 </div>
 
 
-<div id="outline-container-orgc968197" class="outline-3">
-<h3 id="orgc968197"><span class="section-number-3">1.10</span> Force Multiplier</h3>
+<div id="outline-container-orgebbe6e2" class="outline-3">
+<h3 id="orgebbe6e2"><span class="section-number-3">1.10</span> Force Multiplier</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 Automation can act as a force multiplier in a bad way. When automated
@@ -727,8 +740,8 @@ things that are unexpected.
 </p>
 </div>
 
-<div id="outline-container-org764ff94" class="outline-4">
-<h4 id="org764ff94"><span class="section-number-4">1.10.1</span> Remember This</h4>
+<div id="outline-container-orgd342c55" class="outline-4">
+<h4 id="orgd342c55"><span class="section-number-4">1.10.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-10-1">
 <p>
 <i>Ask for help before causing havoc.</i> Infrastructure management tools
@@ -752,8 +765,8 @@ and a "belief" about the current state. Either can be mistaken.
 </div>
 </div>
 
-<div id="outline-container-org55e7718" class="outline-3">
-<h3 id="org55e7718"><span class="section-number-3">1.11</span> Slow Responses</h3>
+<div id="outline-container-orga4f68dd" class="outline-3">
+<h3 id="orga4f68dd"><span class="section-number-3">1.11</span> Slow Responses</h3>
 <div class="outline-text-3" id="text-1-11">
 <p>
 Slow responses can tie up more resources and cause more problems than
@@ -761,8 +774,8 @@ a response that fails outright.
 </p>
 </div>
 
-<div id="outline-container-org501a3ad" class="outline-4">
-<h4 id="org501a3ad"><span class="section-number-4">1.11.1</span> Remember This</h4>
+<div id="outline-container-org292ed1e" class="outline-4">
+<h4 id="org292ed1e"><span class="section-number-4">1.11.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-11-1">
 <p>
 <i>Slow Responses trigger Cascading Failures.</i> Upstream systems
@@ -797,8 +810,8 @@ protocols can cause network stalls, also resulting in Slow Responses.
 </div>
 </div>
 
-<div id="outline-container-org866b8f4" class="outline-3">
-<h3 id="org866b8f4"><span class="section-number-3">1.12</span> Unbounded Result Sets</h3>
+<div id="outline-container-org63337ab" class="outline-3">
+<h3 id="org63337ab"><span class="section-number-3">1.12</span> Unbounded Result Sets</h3>
 <div class="outline-text-3" id="text-1-12">
 <p>
 This is a common problem when working in development and not bothering
@@ -807,8 +820,8 @@ the result set is much bigger and causes issues.
 </p>
 </div>
 
-<div id="outline-container-orgbf0a081" class="outline-4">
-<h4 id="orgbf0a081"><span class="section-number-4">1.12.1</span> Remember This</h4>
+<div id="outline-container-orgc9fbc43" class="outline-4">
+<h4 id="orgc9fbc43"><span class="section-number-4">1.12.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-1-12-1">
 <p>
 <i>Use realistic data volumes.</i> Typical development and test data sets
@@ -848,12 +861,12 @@ too much memory.
 </div>
 </div>
 
-<div id="outline-container-orgbfbc4c8" class="outline-2">
-<h2 id="orgbfbc4c8"><span class="section-number-2">2</span> Stability patterns</h2>
+<div id="outline-container-org1db32f0" class="outline-2">
+<h2 id="org1db32f0"><span class="section-number-2">2</span> Stability patterns</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org39760e3" class="outline-3">
-<h3 id="org39760e3"><span class="section-number-3">2.1</span> Timeouts</h3>
+<div id="outline-container-org24d37d5" class="outline-3">
+<h3 id="org24d37d5"><span class="section-number-3">2.1</span> Timeouts</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Timeouts are a very basic and fundamental pattern for
@@ -862,8 +875,8 @@ the issue rather that consuming resourcing waiting.
 </p>
 </div>
 
-<div id="outline-container-orgcc36231" class="outline-4">
-<h4 id="orgcc36231"><span class="section-number-4">2.1.1</span> Remember This</h4>
+<div id="outline-container-org6b84530" class="outline-4">
+<h4 id="org6b84530"><span class="section-number-4">2.1.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 <i>Apply Timeouts to Integration Points, Blocked Threads, and Slow
@@ -890,8 +903,8 @@ operation and retry it later.
 </div>
 </div>
 
-<div id="outline-container-orgf6433bb" class="outline-3">
-<h3 id="orgf6433bb"><span class="section-number-3">2.2</span> Circuit Breaker</h3>
+<div id="outline-container-org5a5d56e" class="outline-3">
+<h3 id="org5a5d56e"><span class="section-number-3">2.2</span> Circuit Breaker</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The circuit breaker patter is a plan to stop excess failures and fail
@@ -913,8 +926,8 @@ arriving too quickly and we should flip the circuit breaker.
 </p>
 </div>
 
-<div id="outline-container-org069c754" class="outline-4">
-<h4 id="org069c754"><span class="section-number-4">2.2.1</span> Remember This</h4>
+<div id="outline-container-org124e1c4" class="outline-4">
+<h4 id="org124e1c4"><span class="section-number-4">2.2.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 <i>Don't do it if it hurts.</i> Circuit Breaker is the fundamental pattern
@@ -938,8 +951,8 @@ Operations. It should be reported, recorded, trended, and correlated.
 </div>
 </div>
 
-<div id="outline-container-org1c7e666" class="outline-3">
-<h3 id="org1c7e666"><span class="section-number-3">2.3</span> Bulkheads</h3>
+<div id="outline-container-org221f843" class="outline-3">
+<h3 id="org221f843"><span class="section-number-3">2.3</span> Bulkheads</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Bulkheads are the partitions for sealing a ship. If one partition
@@ -949,8 +962,8 @@ that one pool being overloaded won't affect the entire pool.
 </p>
 </div>
 
-<div id="outline-container-org6ef8bfb" class="outline-4">
-<h4 id="org6ef8bfb"><span class="section-number-4">2.3.1</span> Remember This</h4>
+<div id="outline-container-org21ccb90" class="outline-4">
+<h4 id="org21ccb90"><span class="section-number-4">2.3.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 <i>Save part of the ship.</i> The Bulkheads pattern partitions capacity to
@@ -973,8 +986,8 @@ Bulkheads.
 </div>
 </div>
 
-<div id="outline-container-org5b75d59" class="outline-3">
-<h3 id="org5b75d59"><span class="section-number-3">2.4</span> Steady State</h3>
+<div id="outline-container-orgc5c82af" class="outline-3">
+<h3 id="orgc5c82af"><span class="section-number-3">2.4</span> Steady State</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Production systems can run for a long time. Logs fill up, memory leaks
@@ -988,8 +1001,8 @@ resource, some other mechanism must recycle that resource."
 </p>
 </div>
 
-<div id="outline-container-org4cdab67" class="outline-4">
-<h4 id="org4cdab67"><span class="section-number-4">2.4.1</span> Remember This</h4>
+<div id="outline-container-org1c20e66" class="outline-4">
+<h4 id="org1c20e66"><span class="section-number-4">2.4.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
 <i>Avoid fiddling.</i> Human intervention leads to problems. Eliminate the
@@ -1019,8 +1032,8 @@ retain them for compliance, do it on a non-production server.
 </div>
 </div>
 
-<div id="outline-container-orgfa0735e" class="outline-3">
-<h3 id="orgfa0735e"><span class="section-number-3">2.5</span> Fail Fast</h3>
+<div id="outline-container-org1f1028a" class="outline-3">
+<h3 id="org1f1028a"><span class="section-number-3">2.5</span> Fail Fast</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 When your service isn't going to meet its SLA, it's better to fail
@@ -1028,8 +1041,8 @@ fast.
 </p>
 </div>
 
-<div id="outline-container-orgaa8ef42" class="outline-4">
-<h4 id="orgaa8ef42"><span class="section-number-4">2.5.1</span> Remember This</h4>
+<div id="outline-container-org2ed52d7" class="outline-4">
+<h4 id="org2ed52d7"><span class="section-number-4">2.5.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <p>
 <i>Avoid Slow Responses and Fail Fast.</i> If your system cannot meet its
@@ -1058,8 +1071,8 @@ entered.
 </div>
 </div>
 
-<div id="outline-container-org2b81419" class="outline-3">
-<h3 id="org2b81419"><span class="section-number-3">2.6</span> Let It Crash</h3>
+<div id="outline-container-orgc10a8a0" class="outline-3">
+<h3 id="orgc10a8a0"><span class="section-number-3">2.6</span> Let It Crash</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 When we get into a weird state, sometimes the best thing to do to
@@ -1081,8 +1094,8 @@ the pool</li>
 </ul>
 </div>
 
-<div id="outline-container-org0c77871" class="outline-4">
-<h4 id="org0c77871"><span class="section-number-4">2.6.1</span> Remember This</h4>
+<div id="outline-container-org6e62ee8" class="outline-4">
+<h4 id="org6e62ee8"><span class="section-number-4">2.6.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-6-1">
 <p>
 <i>Crash components to save systems.</i> It may seem counterintuitive to
@@ -1116,8 +1129,8 @@ choice.
 </div>
 </div>
 
-<div id="outline-container-org60ffa1d" class="outline-3">
-<h3 id="org60ffa1d"><span class="section-number-3">2.7</span> Handshaking</h3>
+<div id="outline-container-orgea8f354" class="outline-3">
+<h3 id="orgea8f354"><span class="section-number-3">2.7</span> Handshaking</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Handshaking is very normal in low level protocols, but less common at
@@ -1128,8 +1141,8 @@ could be achieved through good health checks and load balancing.
 </div>
 
 
-<div id="outline-container-org4adcc41" class="outline-4">
-<h4 id="org4adcc41"><span class="section-number-4">2.7.1</span> Remember This</h4>
+<div id="outline-container-orgc27ff2b" class="outline-4">
+<h4 id="orgc27ff2b"><span class="section-number-4">2.7.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-7-1">
 <p>
 <i>Create cooperative demand control.</i> Handshaking between a client and
@@ -1154,8 +1167,8 @@ work.
 </div>
 </div>
 
-<div id="outline-container-org6293a65" class="outline-3">
-<h3 id="org6293a65"><span class="section-number-3">2.8</span> Test Harnesses</h3>
+<div id="outline-container-org18d34d5" class="outline-3">
+<h3 id="org18d34d5"><span class="section-number-3">2.8</span> Test Harnesses</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 Test harness is a tool that could be used to test various failure
@@ -1187,8 +1200,8 @@ HTTP), and never send the response body.</li>
 </ul>
 </div>
 
-<div id="outline-container-org33133e7" class="outline-4">
-<h4 id="org33133e7"><span class="section-number-4">2.8.1</span> Remember This</h4>
+<div id="outline-container-org3af334c" class="outline-4">
+<h4 id="org3af334c"><span class="section-number-4">2.8.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-8-1">
 <p>
 <i>Emulate out-of-spec failures.</i> Calling real aplications lets you test
@@ -1222,8 +1235,8 @@ remote systems.
 </div>
 </div>
 
-<div id="outline-container-org584d552" class="outline-3">
-<h3 id="org584d552"><span class="section-number-3">2.9</span> Decoupling Middleware</h3>
+<div id="outline-container-orgc80a912" class="outline-3">
+<h3 id="orgc80a912"><span class="section-number-3">2.9</span> Decoupling Middleware</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 The idea behind decoupling middleware is that we would no longer need
@@ -1233,8 +1246,8 @@ something.
 </p>
 </div>
 
-<div id="outline-container-orge63dbdf" class="outline-4">
-<h4 id="orge63dbdf"><span class="section-number-4">2.9.1</span> Remember This</h4>
+<div id="outline-container-orgb3b7e53" class="outline-4">
+<h4 id="orgb3b7e53"><span class="section-number-4">2.9.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-9-1">
 <p>
 <i>Decide at the last responsible moment.</i> Other stability patterns can
@@ -1263,8 +1276,8 @@ architecture for the problem at hand.
 </div>
 </div>
 
-<div id="outline-container-org5548236" class="outline-3">
-<h3 id="org5548236"><span class="section-number-3">2.10</span> Shed Load</h3>
+<div id="outline-container-org7a1b102" class="outline-3">
+<h3 id="org7a1b102"><span class="section-number-3">2.10</span> Shed Load</h3>
 <div class="outline-text-3" id="text-2-10">
 <p>
 "When load gets too high, start to refuse new requests for work." In
@@ -1273,8 +1286,8 @@ we're failing to meet SLA.
 </p>
 </div>
 
-<div id="outline-container-org3166b77" class="outline-4">
-<h4 id="org3166b77"><span class="section-number-4">2.10.1</span> Remember This</h4>
+<div id="outline-container-org744522f" class="outline-4">
+<h4 id="org744522f"><span class="section-number-4">2.10.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-10-1">
 <p>
 <i>You can't out-scale the world.</i> No matter how large your
@@ -1299,8 +1312,8 @@ recycling connections very quickly.
 </div>
 </div>
 
-<div id="outline-container-org09c4bdc" class="outline-3">
-<h3 id="org09c4bdc"><span class="section-number-3">2.11</span> Create Back Pressure</h3>
+<div id="outline-container-orgf4edf50" class="outline-3">
+<h3 id="orgf4edf50"><span class="section-number-3">2.11</span> Create Back Pressure</h3>
 <div class="outline-text-3" id="text-2-11">
 <p>
 With unbounded queues, we can run into issues because as the queue
@@ -1319,8 +1332,8 @@ on the floor.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgd9323bf" class="outline-4">
-<h4 id="orgd9323bf"><span class="section-number-4">2.11.1</span> Remember This</h4>
+<div id="outline-container-org99d5e95" class="outline-4">
+<h4 id="org99d5e95"><span class="section-number-4">2.11.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-11-1">
 <p>
 <i>Back Pressure creates safety by slowing down consumers.</i> Consumers
@@ -1344,8 +1357,8 @@ forever.
 </div>
 </div>
 
-<div id="outline-container-orga4ba1d3" class="outline-3">
-<h3 id="orga4ba1d3"><span class="section-number-3">2.12</span> Governor</h3>
+<div id="outline-container-org313ae6f" class="outline-3">
+<h3 id="org313ae6f"><span class="section-number-3">2.12</span> Governor</h3>
 <div class="outline-text-3" id="text-2-12">
 <p>
 The idea behind the governor is to slow automations down enough for
@@ -1353,8 +1366,8 @@ humans to get involved and prevent catastrophe.
 </p>
 </div>
 
-<div id="outline-container-org54b900a" class="outline-4">
-<h4 id="org54b900a"><span class="section-number-4">2.12.1</span> Remember This</h4>
+<div id="outline-container-orgb2435d5" class="outline-4">
+<h4 id="orgb2435d5"><span class="section-number-4">2.12.1</span> Remember This</h4>
 <div class="outline-text-4" id="text-2-12-1">
 <p>
 <i>Slow things down to allow intervention.</i> When things are about to go
@@ -1381,12 +1394,12 @@ by slowing down the rate by which they can occur.
 </div>
 </div>
 
-<div id="outline-container-org45b9d17" class="outline-2">
-<h2 id="org45b9d17"><span class="section-number-2">3</span> Themes</h2>
+<div id="outline-container-org65325bb" class="outline-2">
+<h2 id="org65325bb"><span class="section-number-2">3</span> Themes</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org22ce639" class="outline-3">
-<h3 id="org22ce639"><span class="section-number-3">3.1</span> QA</h3>
+<div id="outline-container-org410f313" class="outline-3">
+<h3 id="org410f313"><span class="section-number-3">3.1</span> QA</h3>
 <div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
 <li>Testing and QA isn't enough to "prove that software is ready for the
@@ -1410,8 +1423,8 @@ may break scaling or cause production downtime"</li>
 </div>
 
 
-<div id="outline-container-org6397ee9" class="outline-3">
-<h3 id="org6397ee9"><span class="section-number-3">3.2</span> Clutter</h3>
+<div id="outline-container-org1803bd3" class="outline-3">
+<h3 id="org1803bd3"><span class="section-number-3">3.2</span> Clutter</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Is all the clutter necessary? The clutter and hairy code becomes
@@ -1420,8 +1433,8 @@ necessary when the target is making for "production" rather than QA.
 </div>
 </div>
 
-<div id="outline-container-orgb2a1cde" class="outline-3">
-<h3 id="orgb2a1cde"><span class="section-number-3">3.3</span> Learning</h3>
+<div id="outline-container-org65fb04f" class="outline-3">
+<h3 id="org65fb04f"><span class="section-number-3">3.3</span> Learning</h3>
 <div class="outline-text-3" id="text-3-3">
 <ul class="org-ul">
 <li>Deploying to production begins the "learning process" much faster</li>
@@ -1432,8 +1445,8 @@ reminds me of Dunning Krueger effect</li>
 </div>
 </div>
 
-<div id="outline-container-orgb54b68d" class="outline-3">
-<h3 id="orgb54b68d"><span class="section-number-3">3.4</span> Networking</h3>
+<div id="outline-container-org8834ebe" class="outline-3">
+<h3 id="org8834ebe"><span class="section-number-3">3.4</span> Networking</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 A lot of the content in the book makes me think that there's a lot of
@@ -1448,8 +1461,8 @@ networks.
 </div>
 </div>
 
-<div id="outline-container-org5d45b33" class="outline-3">
-<h3 id="org5d45b33"><span class="section-number-3">3.5</span> DevOps</h3>
+<div id="outline-container-org311f874" class="outline-3">
+<h3 id="org311f874"><span class="section-number-3">3.5</span> DevOps</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 "There is a mental shift from ownership of the domain to offering a
@@ -1463,8 +1476,8 @@ offering a release service to customers.
 
 
 
-<div id="outline-container-org4f71baf" class="outline-2">
-<h2 id="org4f71baf"><span class="section-number-2">4</span> Thoughts / Random Notes</h2>
+<div id="outline-container-orgaa4afeb" class="outline-2">
+<h2 id="orgaa4afeb"><span class="section-number-2">4</span> Thoughts / Random Notes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 "Enterprise software must be cynical. Cynical software expects bad
@@ -1693,8 +1706,8 @@ there is a force to make things safer.
 </div>
 </div>
 
-<div id="outline-container-org30b6216" class="outline-2">
-<h2 id="org30b6216"><span class="section-number-2">5</span> Useful Definitions</h2>
+<div id="outline-container-org247b4e6" class="outline-2">
+<h2 id="org247b4e6"><span class="section-number-2">5</span> Useful Definitions</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <i>Transaction</i>: An abstract unit of work processed by the system.
@@ -1782,12 +1795,12 @@ configuration files, and other resource as they exist on a machine.
 </div>
 </div>
 
-<div id="outline-container-org8c9f9f9" class="outline-2">
-<h2 id="org8c9f9f9"><span class="section-number-2">6</span> Further Reading List</h2>
+<div id="outline-container-org51e2bb2" class="outline-2">
+<h2 id="org51e2bb2"><span class="section-number-2">6</span> Further Reading List</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li><a href="https://www.osha.gov/dts/osta/otm/otm_iv/otm_iv_4.html#5">https://www.osha.gov/dts/osta/otm/otm_iv/otm_iv_4.html#5</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Little's_law">https://en.wikipedia.org/wiki/Little's_law</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Little%27s_law">https://en.wikipedia.org/wiki/Little%27s_law</a></li>
 <li><a href="http://roc.cs.berkeley.edu/">http://roc.cs.berkeley.edu/</a></li>
 <li><a href="http://www.openapis.org">http://www.openapis.org</a> + <a href="http://swagger.io/swagger-ui">http://swagger.io/swagger-ui</a></li>
 <li><a href="https://dl.acm.org/citation.cfm?id=361623">https://dl.acm.org/citation.cfm?id=361623</a></li>
@@ -1797,7 +1810,7 @@ configuration files, and other resource as they exist on a machine.
 </div>
 </div>
 <div id="postamble" class="status">
-<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2019-04-16 Tue 22:59</small></footer>
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2020-10-30 Fri 18:17</small></footer>
 </div>
 </body>
 </html>
