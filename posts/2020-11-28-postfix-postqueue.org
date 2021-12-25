@@ -83,113 +83,10 @@ better.
 
 Here is the initial script:
 
-#+begin_src golang
-package main
 
-import (
-	"bufio"
-	"flag"
-	"fmt"
-	"log"
-	"os"
-	"regexp"
-	"strconv"
-	"strings"
-	"time"
-)
-
-type (
-	QueuedItem struct {
-		QueueID     string
-		Status      string
-		Size        int
-		ArrivalTime time.Time
-		Sender      string
-		Recipient   string
-	}
-)
-
-const (
-	postfixFormat = "Mon Jan 02 15:04:05"
-)
-
-var (
-	minuteFlag int
-)
-
-func main() {
-	mf := flag.Int("m", 1000, "print a line if the message is older than m minutes")
-
-	flag.Parse()
-	if mf == nil {
-		log.Fatal("Nil minute flag")
-	}
-	minuteFlag = *mf
-
-	fromRe := regexp.MustCompile(`^([[:xdigit:]]*)([*!])\s*(\d*)\s*([A-Za-z]*\s[A-Za-z]*\s[0-9]{2}\s[0-9:]*)\s*(.*)$`)
-	rcptRe := regexp.MustCompile(`^\s*(.*)$`)
-
-	scanner := bufio.NewScanner(os.Stdin)
-	qi := new(QueuedItem)
-	for scanner.Scan() {
-		curLine := scanner.Text()
-		// this is some kind of comme
-		if strings.HasPrefix(curLine, "-") {
-			continue
-		}
-		// This is a record separator
-		if curLine == "" {
-			process(qi)
-			qi = new(QueuedItem)
-		}
-		// this is a from line
-		fromMatches := fromRe.FindAllStringSubmatch(curLine, -1)
-		if fromMatches != nil {
-			var sizeErr error = nil
-			var timeErr error = nil
-			qi.QueueID = fromMatches[0][1]
-			qi.Status = fromMatches[0][2]
-			qi.Size, sizeErr = strconv.Atoi(fromMatches[0][3])
-			qi.ArrivalTime, timeErr = time.Parse(postfixFormat, fromMatches[0][4])
-			qi.Sender = fromMatches[0][5]
-
-			if sizeErr != nil {
-				log.Printf("There was an issue reading the message size: %s", sizeErr.Error())
-			}
-			if timeErr != nil {
-				log.Printf("There was an issue reading the message time: %s", timeErr.Error())
-			}
-
-			continue
-		}
-		// this is a to line
-		rcptMatches := rcptRe.FindAllStringSubmatch(curLine, -1)
-		if rcptMatches != nil {
-			qi.Recipient = rcptMatches[0][1]
-			continue
-		}
-		// idk what this is
-		log.Printf("Unrecognized line: %s", curLine)
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Println(err)
-	}
-}
-
-func process(q *QueuedItem) {
-	// This is is a little weird because postfix dates don't have a year associated with them...
-	roughNow := time.Now().Format(postfixFormat)
-	postfixNow, _ := time.Parse(postfixFormat, roughNow)
-
-	age := postfixNow.Sub(q.ArrivalTime)
-	if int(age.Minutes()) < minuteFlag {
-		// still young
-		return
-	}
-	fmt.Println(q.QueueID)
-}
-#+end_src
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/praetoriansentry/7e0dfdcb45f96fe55d0344f85fca3eca.js"></script>
+#+END_EXPORT
 
 
 I was considering writing it in perl, but changed my mind because I
@@ -202,7 +99,8 @@ In order to purge our queues of old emails I ran something like this:
 
 
 #+begin_src bash
-postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | postsuper -c /etc/postfix-02 -d -
+postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | \
+  postsuper -c /etc/postfix-02 -d -
 #+end_src
 
 First, I'm getting all of the emails are in the queue for the 02

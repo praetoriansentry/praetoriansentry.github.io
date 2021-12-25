@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2021-12-24 Fri 21:54 -->
+<!-- 2021-12-25 Sat 10:52 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Postfix Postqueue Parser</title>
@@ -41,7 +41,7 @@
   }
   pre.src {
     position: relative;
-    overflow: auto;
+    overflow: visible;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -53,7 +53,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
+  pre.src:hover:before { display: inline;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -200,26 +200,50 @@
 <meta property="og:description" content="A small program to parse the postfix queue." />
 <meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
 <script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
 </script>
 </head>
 <body>
@@ -272,114 +296,8 @@ better.
 Here is the initial script:
 </p>
 
-<div class="org-src-container">
-<pre class="src src-golang">package main
 
-import (
-        "bufio"
-        "flag"
-        "fmt"
-        "log"
-        "os"
-        "regexp"
-        "strconv"
-        "strings"
-        "time"
-)
-
-type (
-        QueuedItem struct {
-                QueueID     string
-                Status      string
-                Size        int
-                ArrivalTime time.Time
-                Sender      string
-                Recipient   string
-        }
-)
-
-const (
-        postfixFormat = "Mon Jan 02 15:04:05"
-)
-
-var (
-        minuteFlag int
-)
-
-func main() {
-        mf := flag.Int("m", 1000, "print a line if the message is older than m minutes")
-
-        flag.Parse()
-        if mf == nil {
-                log.Fatal("Nil minute flag")
-        }
-        minuteFlag = *mf
-
-        fromRe := regexp.MustCompile(`^([[:xdigit:]]*)([*!])\s*(\d*)\s*([A-Za-z]*\s[A-Za-z]*\s[0-9]{2}\s[0-9:]*)\s*(.*)$`)
-        rcptRe := regexp.MustCompile(`^\s*(.*)$`)
-
-        scanner := bufio.NewScanner(os.Stdin)
-        qi := new(QueuedItem)
-        for scanner.Scan() {
-                curLine := scanner.Text()
-                // this is some kind of comme
-                if strings.HasPrefix(curLine, "-") {
-                        continue
-                }
-                // This is a record separator
-                if curLine == "" {
-                        process(qi)
-                        qi = new(QueuedItem)
-                }
-                // this is a from line
-                fromMatches := fromRe.FindAllStringSubmatch(curLine, -1)
-                if fromMatches != nil {
-                        var sizeErr error = nil
-                        var timeErr error = nil
-                        qi.QueueID = fromMatches[0][1]
-                        qi.Status = fromMatches[0][2]
-                        qi.Size, sizeErr = strconv.Atoi(fromMatches[0][3])
-                        qi.ArrivalTime, timeErr = time.Parse(postfixFormat, fromMatches[0][4])
-                        qi.Sender = fromMatches[0][5]
-
-                        if sizeErr != nil {
-                                log.Printf("There was an issue reading the message size: %s", sizeErr.Error())
-                        }
-                        if timeErr != nil {
-                                log.Printf("There was an issue reading the message time: %s", timeErr.Error())
-                        }
-
-                        continue
-                }
-                // this is a to line
-                rcptMatches := rcptRe.FindAllStringSubmatch(curLine, -1)
-                if rcptMatches != nil {
-                        qi.Recipient = rcptMatches[0][1]
-                        continue
-                }
-                // idk what this is
-                log.Printf("Unrecognized line: %s", curLine)
-        }
-
-        if err := scanner.Err(); err != nil {
-                log.Println(err)
-        }
-}
-
-func process(q *QueuedItem) {
-        // This is is a little weird because postfix dates don't have a year associated with them...
-        roughNow := time.Now().Format(postfixFormat)
-        postfixNow, _ := time.Parse(postfixFormat, roughNow)
-
-        age := postfixNow.Sub(q.ArrivalTime)
-        if int(age.Minutes()) &lt; minuteFlag {
-                // still young
-                return
-        }
-        fmt.Println(q.QueueID)
-}
-</pre>
-</div>
+<script src="https://gist.github.com/praetoriansentry/7e0dfdcb45f96fe55d0344f85fca3eca.js"></script>
 
 
 <p>
@@ -396,7 +314,8 @@ In order to purge our queues of old emails I ran something like this:
 
 
 <div class="org-src-container">
-<pre class="src src-bash">postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | postsuper -c /etc/postfix-02 -d -
+<pre class="src src-bash">postqueue -p -c /etc/postfix-02 | ./postqueueparse-linux-amd64 -m 1000 | \
+  postsuper -c /etc/postfix-02 -d -
 </pre>
 </div>
 
@@ -412,7 +331,7 @@ emails.
 </p>
 </div>
 <div id="postamble" class="status">
-<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2021-12-24 Fri 21:12</small></footer>
+<footer><small>Built with <a href='https://orgmode.org/'>Org-Mode</a>: 2021-12-25 Sat 10:52</small></footer>
 </div>
 </body>
 </html>
