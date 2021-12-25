@@ -1,0 +1,66 @@
+#+TITLE: Testing with Gemini Diagnostics
+#+DATE:
+#+AUTHOR: John Hilliard
+#+EMAIL: jhilliard@nextjump.com
+#+CREATOR: John Hilliard
+#+DESCRIPTION: The website of John Hilliard
+#+HTML_DOCTYPE: html5
+#+KEYWORDS: gemini, testing, QA
+#+SUBTITLE: ./john
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/sakura-dark.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/mine.css" />
+#+HTML_HEAD: <meta property="og:title" content="John Hilliard Blog" />
+#+HTML_HEAD: <meta property="og:description" content="Basic approach to stress test my Gemini server" />
+#+HTML_HEAD: <meta property="og:image" content="https://john.dev/img/DypZgmuXcAAQRCt.jpg" />
+#+OPTIONS: toc:nil
+
+
+I saw that the Gemini documentation has a client torture test. That
+made me curious if there was a server torture test as well. I found a
+reference to a test in the Gemini mailing list: [[https://lists.orbitalfox.eu/archives/gemini/2020/000296.html][Script to test gemini servers]] & [[https://github.com/michael-lazar/jetforce/blob/master/jetforce_diagnostics.py][jetforce_diagnostics.py]]
+
+I went to look at ~jetforce_diagnostics.py~ and of course encountered
+a 404. After looking through the git history and release notes, I was
+able to find that the diagnostics script was pulled into it's own
+repo.
+
+https://github.com/michael-lazar/gemini-diagnostics
+
+After taking a quick look at the code I tried it out and tested my
+server. The script found a lot of issues with my own server
+implementation. Some of the findings seem to be false positives, but
+some of the issues seem to be real discrepancies with the
+implementation of Melchoir and the spec. Here are the issues that the
+script pointed out
+
+1. [TLSRequired] Non-TLS requests should be refused
+2. [HomepageRedirect] A URL with no trailing slash should redirect to the canonical resource
+3. [RequestMissingCR] A request without a <CR> should timeout
+4. [URLInvalidUTF8Byte] Send a URL containing a non-UTF8 byte sequence
+5. [URLAboveMaxSize] Send a 1025 byte URL, above the maximum allowed size
+6. [URLWrongPort] A URL with an incorrect port number should be rejected
+7. [URLWrongHost] A URL with a foreign hostname should be rejected
+8. [URLSchemeHTTP] Send a URL with an HTTP scheme
+9. [URLSchemeHTTPS] Send a URL with an HTTPS scheme
+10. [URLSchemeGopher] Send a URL with a Gopher scheme
+11. [URLEmpty] Empty URLs should not be accepted by the server
+12. [URLInvalid] Random text should not be accepted by the server
+13. [URLDotEscape] A URL should not be able to escape the root using dot notation
+
+That's a lot of errors!
+
+** Applying Fixes
+
+[[https://github.com/praetoriansentry/melchior/commit/96ea45a30b59b0833cb81461d6f3e1c618167c3b][Patches]]
+
+Fixing the errors here was pretty easy. My basic server was very
+easygoing when it came to the format of the requests. The only thing I
+was really doing was making sure directory traversal was not
+possible. My error codes weren't quite right and I wasn't enforcing
+checks on the hostname, port numbers, and scheme.
+
+The expected behavior when a request doesn't end with ~\r\n~ was a
+little surprising.. I.e. I didn't expect that you should get a timeout
+/ empty response If the request didn't end with ~\r\n~. I guess it
+kind of makes sense. Perhaps in the early phases of the protocol it's
+better to be a bit strict.
