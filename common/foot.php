@@ -3,7 +3,9 @@
         <footer>
             <div class="row spacious">
                 <div class="col">
-                    Footer
+                    <p class="desctext">
+                        John Hilliard - <?php echo date('Y'); ?>
+                    </p>
                 </div>
             </div>
         </footer>

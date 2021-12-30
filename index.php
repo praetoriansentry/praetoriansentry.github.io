@@ -56,30 +56,19 @@
 
 
   <div class="row spacious">
-    <div class="col-6 d-flex">
-      <div class="align-self-center desctext">
-        I also like finding vintage electronics like this Z-Angle Meter
+    <div class="col-12 d-flex">
+      <div class="align-self-center desctext mb-5">
+        I also like finding vintage electronics like this Z-Angle Meter or the front panel of an IBM 1401
       </div>
     </div>
     <div class="col-6">
       <img src="img/comp/4R8A3550_sm.jpg" class="img-fluid" title="Z-Angle Meter">
     </div>
-  </div>
-
-
-
-
-
-  <div class="row spacious">
     <div class="col-6">
       <img src="img/comp/4R8A3555_sm.jpg" class="img-fluid" title="IBM 1401 Front Panel">
     </div>
-    <div class="col-6 d-flex">
-      <div class="align-self-center desctext">
-        or the front panel from an IBM 1401.
-      </div>
-    </div>
   </div>
+
 
 
 
@@ -141,6 +130,28 @@
 
 
 
+
+
+      
+    <div class="row spacious">
+      <div class="col-12 desctext mb-5">
+        I also like creating data visualizations.
+      </div>
+    <div class="col-6">
+      <img src="img/binviz/viz1_sm.jpg" class="img-fluid" title="Electronics of the Z-Angle Meter">
+    </div>
+    <div class="col-6">
+      <img src="img/binviz/viz2_sm.jpg" class="img-fluid" title="Electronics of the Z-Angle Meter">
+    </div>
+    <div class="col-6">
+      <img src="img/binviz/mona_sm.jpg" class="img-fluid" title="Electronics of the Z-Angle Meter">
+    </div>
+
+    <div class="col-6">
+      <img src="img/binviz/viz3_sm.jpg" class="img-fluid" title="Electronics of the Z-Angle Meter">
+    </div>
+
+  </div>
 
   <div class="row spacious">
     <div class="col-12">
