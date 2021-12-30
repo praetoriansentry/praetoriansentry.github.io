@@ -30,7 +30,7 @@
 
 
 
-        <div class="col-4">
+        <div class="col-md-4 col-sm-12">
           <h1>
             <a href="/" class="simple-link">JOHN</a>
           </h1>
