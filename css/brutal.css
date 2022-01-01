@@ -85,3 +85,23 @@ a {
     color: black;
 }
 
+/* Small Screen Fonts*/
+@media only screen and (max-width: 600px) {
+    .blogpost h1 {
+        font-size: 36px;
+    }
+    .bigtext, h3.subtitle {
+        font-size: 36px;
+    }
+    .post-list li {
+        font-size: 24px;
+    }
+    .desctext {
+        font-size: 24px;
+    }
+    .spacious {
+        margin: 100px 0;
+    }
+
+
+}

@@ -194,7 +194,7 @@
         <ul class="normal">
           <li> Main Site: <a href="https://blockmazing.com">BlockMazing.com</a> </li>
           <li> Open Sea: <a href="https://opensea.io/collection/mze"> Block Mazing</a> </li>
-          <li> Contract: <a href="https://etherscan.io/address/0x222a11ac067da39b12bf221717bfab75e3d374b4"> 0x222a11ac067da39b12bf221717bfab75e3d374b4 </a> </li>
+          <li> Contract: <a href="https://etherscan.io/address/0x222a11ac067da39b12bf221717bfab75e3d374b4"> 0x222...4b4 </a> </li>
         </ul>
       </div>
     </div>
@@ -223,7 +223,7 @@
         <ul class="normal">
           <li> Main Site: <a href="https://ascii.j4.is">ascii.j4.is</a> </li>
           <li> Open Sea: <a href="https://opensea.io/collection/asciiwall"> ASCII Wall</a> </li>
-          <li> Contract: <a href="https://etherscan.io/address/0x484e02fe62539871651263cb1a3952e4b95012f0"> 0x484e02fe62539871651263cb1a3952e4b95012f0 </a> </li>
+          <li> Contract: <a href="https://etherscan.io/address/0x484e02fe62539871651263cb1a3952e4b95012f0"> 0x484...2f0 </a> </li>
         </ul>
       </div>
     </div>
@@ -247,7 +247,7 @@
         </p>
         <ul class="normal">
           <li> Open Sea: <a href="https://opensea.io/collection/praetorianphoto">Photos</a> </li>
-          <li> Contract: <a href="https://polygonscan.com/address/0x607612adc3c59f6f2096758d8181f700288f230c"> 0x607612adc3c59f6f2096758d8181f700288f230c </a> </li>
+          <li> Contract: <a href="https://polygonscan.com/address/0x607612adc3c59f6f2096758d8181f700288f230c"> 0x607...30c </a> </li>
         </ul>
       </div>
     </div>
