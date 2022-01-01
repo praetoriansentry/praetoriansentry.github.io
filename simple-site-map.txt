@@ -1,0 +1,15 @@
+https://john.dev/
+https://john.dev/blog
+https://john.dev/photos
+https://john.dev/contact
+https://john.dev/b?id=2020-11-28-postfix-postqueue
+https://john.dev/b?id=2020-11-14-systemd-rootdirectory
+https://john.dev/b?id=2020-11-02-gemini-dianostics
+https://john.dev/b?id=2020-11-01-melchior
+https://john.dev/b?id=2019-04-14-release-it-notes
+https://john.dev/b?id=2019-04-02-hid-prox
+https://john.dev/b?id=2019-03-31-lambda-to-s3-golang
+https://john.dev/b?id=2019-03-04-js-quine
+https://john.dev/b?id=2019-02-29-quine
+https://john.dev/b?id=2019-02-23-ascii-face
+https://john.dev/b?id=2019-orielly-sa-conf
