@@ -52,7 +52,7 @@
     <div class="row spacious">
     <div class="col-12">
       <p class="bigtext">
-        See more on <a href="https://opensea.io/collection/praetorianphoto">OpenSea</>
+        See more on <a href="https://opensea.io/collection/praetorianphoto">OpenSea</a>
       </p>
     </div>
   </div>

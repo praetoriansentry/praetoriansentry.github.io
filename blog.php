@@ -18,6 +18,7 @@
     <li><a href="/b?id=2019-orielly-sa-conf">Notes from my trip to #OReillySAConf</a></li>
   </ul>
 
+
   <h3 class="mb-5 mt-5 subtitle"> Some Talking </h3>
   <ul class="post-list">
     <li><a href="https://www.youtube.com/watch?v=BFoKJILtNT0">EIP 12 - Navigating unknown systems</a></li>

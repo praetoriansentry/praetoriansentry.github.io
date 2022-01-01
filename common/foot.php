@@ -3,7 +3,7 @@
         <footer>
             <div class="row spacious">
                 <div class="col">
-                    <p class="desctext">
+                    <p class="normal">
                         John Hilliard - <?php echo date('Y'); ?>
                     </p>
                 </div>
