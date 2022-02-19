@@ -21,6 +21,10 @@
 
   <h3 class="mb-5 mt-5 subtitle"> Some Talking </h3>
   <ul class="post-list">
+    <li><a href="https://www.youtube.com/watch?v=xGsssGt2B1c">EIP 17 - Tips for Hackathons</a></li>
+    <li><a href="https://www.youtube.com/watch?v=VVhkEtzyscE">EIP 15 - Turning Code into a Mental Model</a></li>
+    <li><a href="https://www.youtube.com/watch?v=ARuJtdj2_fU">EIP 14 - Engineering Decision-Making</a></li>
+    <li><a href="https://www.youtube.com/watch?v=IJWXRrMdm1M">EIP 13 - Think + Talk + Model</a></li>
     <li><a href="https://www.youtube.com/watch?v=BFoKJILtNT0">EIP 12 - Navigating unknown systems</a></li>
     <li><a href="https://www.youtube.com/watch?v=DMGtzcuyCuY">EIP 11 - Storytelling with data</a></li>
     <li><a href="https://www.youtube.com/watch?v=UwhDjUtxo3E">EIP 09 - Disciplined Innovation</a></li>
