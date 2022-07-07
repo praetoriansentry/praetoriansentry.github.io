@@ -3,7 +3,7 @@
 </h1>
 
 <div id="org04904f6" class="figure">
-<p><img class="img-fluid" "src="../img/release-it.jpg" alt="release-it.jpg">
+<p><img class="img-fluid" src="../img/release-it.jpg" alt="release-it.jpg">
 </p>
 </div>
 
